@@ -5,6 +5,8 @@ import com.mycompany.models.Book;
 import com.mycompany.models.OriginalModelsContainer;
 import com.mycompany.models.Publisher;
 import com.mycompany.serializers.Serializer;
+import com.mycompany.serializers.xmlformat.GetterAuthorsFromBooks;
+import com.mycompany.serializers.xmlformat.GetterBooksFromPublishers;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

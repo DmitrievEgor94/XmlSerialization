@@ -5,6 +5,8 @@ import com.mycompany.models.Book;
 import com.mycompany.models.OriginalModelsContainer;
 import com.mycompany.models.Publisher;
 import com.mycompany.serializers.Serializer;
+import com.mycompany.serializers.xmlformat.GetterAuthorsFromBooks;
+import com.mycompany.serializers.xmlformat.GetterBooksFromPublishers;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,9 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class XmlDomSerializer implements Serializer {
 
@@ -50,17 +50,9 @@ public class XmlDomSerializer implements Serializer {
                 }
             }
 
-            List<Book> books = publishers.stream()
-                    .map(Publisher::getBooks)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .collect(Collectors.toList());
+            List<Book> books = GetterBooksFromPublishers.get(publishers);
 
-            List<Author> authors = books.stream()
-                    .map(Book::getAuthors)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .collect(Collectors.toList());
+            List<Author> authors = GetterAuthorsFromBooks.get(books);
 
             return new OriginalModelsContainer(authors, books, publishers);
         } catch (ParserConfigurationException | SAXException e) {

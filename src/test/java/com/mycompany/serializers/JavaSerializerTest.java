@@ -14,7 +14,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class JavaSerializerTest {
     private List<Author> authors;
     private List<Book> books;
