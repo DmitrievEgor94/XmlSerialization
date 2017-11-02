@@ -80,6 +80,6 @@ public class XmlSaxSerializerTest {
         PrinterOnConsole printerOnConsole = new PrinterOnConsole();
         printerOnConsole.show(publishers);
 
-        assertEquals(publishers, publishers);
+        assertEquals(checkPublishers, publishers);
     }
 }
