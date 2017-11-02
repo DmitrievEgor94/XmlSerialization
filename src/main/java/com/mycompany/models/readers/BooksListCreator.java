@@ -2,6 +2,7 @@ package com.mycompany.models.readers;
 
 import com.mycompany.models.Author;
 import com.mycompany.models.Book;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +16,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class BooksListCreator {
+
+    private static final Logger log = Logger.getLogger(BooksListCreator.class);
 
     public static List<Book> getListWithBooks(List<Author> createdAuthors) throws FileNotFoundException {
 
@@ -52,7 +55,7 @@ public class BooksListCreator {
                 books.add(new Book(title, dayOfPublication, authorsObjectForCurrentBook));
             }
         } catch (DateTimeParseException e) {
-            System.out.println(e + ". Error in file " + fullNameFileBooks);
+            log.error(e + ". Error in file " + fullNameFileBooks);
         }
 
         return books;

@@ -73,7 +73,6 @@ public class SaxHandler extends DefaultHandler {
         }
 
         currentElement = qName;
-
     }
 
     @Override

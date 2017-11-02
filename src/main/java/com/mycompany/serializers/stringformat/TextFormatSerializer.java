@@ -13,6 +13,7 @@ import com.mycompany.models.entities.creators.PublisherEntitiesCreator;
 import com.mycompany.models.entities.restorators.AuthorsRestorator;
 import com.mycompany.models.entities.restorators.BooksRestorator;
 import com.mycompany.models.entities.restorators.PublishersRestorator;
+import com.mycompany.models.readers.BooksListCreator;
 import com.mycompany.serializers.Serializer;
 import com.mycompany.serializers.stringformat.readers.AuthorsReader;
 import com.mycompany.serializers.stringformat.readers.BooksReader;
@@ -22,6 +23,7 @@ import com.mycompany.serializers.stringformat.validators.Validator;
 import com.mycompany.serializers.stringformat.writers.AuthorsWriterInTextFile;
 import com.mycompany.serializers.stringformat.writers.BooksWriterInTextFile;
 import com.mycompany.serializers.stringformat.writers.PublishersWriterInFile;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +33,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TextFormatSerializer implements Serializer {
+
+    private static final Logger log = Logger.getLogger(BooksListCreator.class);
 
     static private final String AUTHOR_MODEL = "Authors";
     static private final String BOOK_MODEL = "Books";
@@ -68,11 +72,14 @@ public class TextFormatSerializer implements Serializer {
 
 
     @Override
-    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException, ClassNotFoundException {
+    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException {
         try (Scanner scanner = new Scanner(new File(fileWithObjects))) {
             String content = scanner.useDelimiter("\\Z").next();
 
-            if (!Validator.validateContent(content)) throw new ClassNotFoundException("Invalid data in file!");
+            if (!Validator.validateContent(content)) {
+                log.error(fileWithObjects + "is wrong file for TextFormatDeserialization");
+                return null;
+            }
 
             List<Integer> openBracketsPositions = BracketsFinder.getBracketPositions(content, LIST_OPEN_BRACKET);
             List<Integer> closeBracketsPositions = BracketsFinder.getBracketPositions(content, LIST_CLOSE_BRACKET);

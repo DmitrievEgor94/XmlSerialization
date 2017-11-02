@@ -7,6 +7,7 @@ import com.mycompany.models.Publisher;
 import com.mycompany.serializers.Serializer;
 import com.mycompany.serializers.xmlformat.GetterAuthorsFromBooks;
 import com.mycompany.serializers.xmlformat.GetterBooksFromPublishers;
+import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -17,13 +18,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class XmlSaxSerializer implements Serializer {
+
+    private static final Logger log = Logger.getLogger(XmlSaxSerializer.class);
+
+
     @Override
     public void serializeObjects(List<Author> authors, List<Book> books, List<Publisher> publishers, String fileWithObjects) throws IOException {
         throw new UnsupportedOperationException(this.getClass() + " doesn't support serializing!");
     }
 
     @Override
-    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException, ClassNotFoundException {
+    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException {
 
         try {
             SaxHandler saxHandler = new SaxHandler();
@@ -38,8 +43,8 @@ public class XmlSaxSerializer implements Serializer {
             List<Author> authors = GetterAuthorsFromBooks.get(books);
 
             return new OriginalModelsContainer(authors, books, publishers);
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
+        } catch (SAXException e) {
+            log.error(e);
         }
 
         return null;

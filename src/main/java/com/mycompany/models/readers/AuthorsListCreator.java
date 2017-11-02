@@ -1,6 +1,7 @@
 package com.mycompany.models.readers;
 
 import com.mycompany.models.Author;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AuthorsListCreator {
+
+    private static final Logger log = Logger.getLogger(BooksListCreator.class);
 
     static private final String ABSENT_DEATH_DATE = "-";
 
@@ -45,7 +48,7 @@ public class AuthorsListCreator {
 
             }
         } catch (DateTimeParseException e) {
-            System.out.println(e + ". Error in file " + fullNameOfFileWithAuthors);
+            log.error(e + ". Error in file " + fullNameOfFileWithAuthors);
         }
         return listOfAuthors;
     }

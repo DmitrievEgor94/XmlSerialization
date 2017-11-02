@@ -4,9 +4,11 @@ import com.mycompany.models.Author;
 import com.mycompany.models.Book;
 import com.mycompany.models.OriginalModelsContainer;
 import com.mycompany.models.Publisher;
+import com.mycompany.models.readers.BooksListCreator;
 import com.mycompany.serializers.Serializer;
 import com.mycompany.serializers.xmlformat.GetterAuthorsFromBooks;
 import com.mycompany.serializers.xmlformat.GetterBooksFromPublishers;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,6 +25,7 @@ import java.util.List;
 public class XmlDomSerializer implements Serializer {
 
     private static final String PUBLISHER_CLASS_NAME = "Publisher";
+    private static final Logger log = Logger.getLogger(BooksListCreator.class);
 
     @Override
     public void serializeObjects(List<Author> authors, List<Book> books, List<Publisher> publishers, String fileWithObjects) throws IOException {
@@ -30,7 +33,7 @@ public class XmlDomSerializer implements Serializer {
     }
 
     @Override
-    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException, ClassNotFoundException {
+    public OriginalModelsContainer deserializeObject(String fileWithObjects) throws IOException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -56,7 +59,7 @@ public class XmlDomSerializer implements Serializer {
 
             return new OriginalModelsContainer(authors, books, publishers);
         } catch (ParserConfigurationException | SAXException e) {
-            System.out.println(e);
+            log.error(e);
         }
 
         return null;

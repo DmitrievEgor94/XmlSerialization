@@ -1,4 +1,4 @@
-package com.mycompany.views;
+package com.mycompany.viewers;
 
 import com.mycompany.models.Publisher;
 

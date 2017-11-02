@@ -4,7 +4,7 @@ import com.mycompany.models.Author;
 import com.mycompany.models.Book;
 import com.mycompany.models.Publisher;
 import com.mycompany.serializers.xmlformat.dom.XmlDomSerializer;
-import com.mycompany.views.PrinterOnConsole;
+import com.mycompany.viewers.PrinterOnConsole;
 import org.junit.Test;
 
 import java.time.LocalDate;
