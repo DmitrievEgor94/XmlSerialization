@@ -7,6 +7,7 @@ import com.mycompany.models.Publisher;
 import com.mycompany.serializers.Serializer;
 import com.mycompany.serializers.xmlformat.GetterAuthorsFromBooks;
 import com.mycompany.serializers.xmlformat.GetterBooksFromPublishers;
+import com.mycompany.serializers.xmlformat.GetterUniqueElements;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,7 +43,8 @@ public class XmlSaxSerializer implements Serializer {
 
             List<Author> authors = GetterAuthorsFromBooks.get(books);
 
-            return new OriginalModelsContainer(authors, books, publishers);
+            return GetterUniqueElements.get(authors, books, publishers);
+
         } catch (SAXException e) {
             log.error(e);
         }
